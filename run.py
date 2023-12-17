@@ -21,7 +21,16 @@ def show_title():
     print("Welcome to Hangman Game!")
 
 def show_play_rules():
-    rules = [
+    """
+    Displays the rules if the user chooses to, does nothign otherwise
+    """
+    display_rules = input("Would you like to see the game rules? (y/n)\n " )
+    
+    while display_rules.lower()  not in ['y', 'n']:
+        display_rules = input('Please only choose n to skip the rules or y to see them\n')
+    
+    if display_rules.lower() == 'y':
+        rules = [
         "Insert your username so we know who are playing with.",
         "Choose a difficulty level between easy, medium and hard.",
         "Choose a letter that you believe it is in the word to guess.",
@@ -29,11 +38,8 @@ def show_play_rules():
         "You have six tries to guess, otherwise the man will be hanged",
         "Let's begin"
     ]
-    display_rules = input("Would you like to see the game rules? (y/n)" )
-    if display_rules.lower == 'n':
-        print("You have chosen to skip the rules, let's start the game")
-        insert_username()
-    else:
         print(rules)
-
+    else:
+        print("You have chosen to skip the rules, let's start the game")
+show_play_rules()
 
