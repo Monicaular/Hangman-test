@@ -1,4 +1,4 @@
-easy_level_words= [
+easy_level_words = [
     'lion',
     'italy',
     'apple',
