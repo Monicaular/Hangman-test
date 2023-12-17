@@ -1,5 +1,6 @@
 import words
 import random
+import re
 
 def show_title():
     game_title = '''
@@ -41,5 +42,24 @@ def show_play_rules():
         print(rules)
     else:
         print("You have chosen to skip the rules, let's start the game")
-show_play_rules()
 
+def add_a_name():
+    """
+    It asks the user to enter a name and validates it
+    """
+    pattern = re.compile("^[a-zA-Z0-9]{1,8}$")
+    username = input("Please Enter a username: ")
+    if pattern.match(username):
+        print(f"{username}, let's start the hangman game! Have fun!")
+    else:
+        print("Invalid username. Please use only letters and numbers, and the length should be between 1 and 8 characters.")
+    
+
+
+
+# def main():
+#     show_title()
+#     show_play_rules()
+#     add_a_name()
+
+# main()
