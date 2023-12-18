@@ -55,11 +55,6 @@ def add_a_name():
         print("Invalid username. Please use only letters and numbers, and the length should be between 1 and 8 characters.")
     
 
-def choose_difficulty():
-    """
-    Gets the user to choose the difficulty of the game that they prefer
-    """
-    import words
 
 def choose_difficulty():
     """
@@ -72,28 +67,44 @@ def choose_difficulty():
             print("2 - Medium")
             print("3 - Hard")
 
-            choice = input("Enter the number corresponding to your choice: ")
-            choice = int(choice)
+            selected_choice = input("Enter the number corresponding to your choice: ")
+            selected_choice = int(selected_choice)
             
             # Validate user input
-            if choice not in [1, 2, 3]:
+            if selected_choice not in [1, 2, 3]:
                 raise ValueError("Invalid choice. Please enter 1, 2, or 3.\n")
-            
-            # Assign the selected word list based on the difficulty level
-            if choice == 1:
-                return words.easy_level_words
-            elif choice == 2:
-                return words.medium_level_words
-            else:
-                return words.hard_level_words
+            break
         except ValueError as e:
             print(e)
-            continue
+            
+            
+    # Assign the selected word list based on the difficulty level
+    if selected_choice == 1:
+        word_list = words.easy_level_words
+    elif selected_choice == 2:
+        word_list = words.medium_level_words
+    else:
+        word_list = words.hard_level_words
+
+def get_random_word(word_list):
+    """
+    Selects a random word from the lists that are in words.py
+    """
+    random_word = random.choice(word_list)
+    return random_word.upper()
+
+
+
+
+
 
 # def main():
 #     show_title()
 #     show_play_rules()
 #     add_a_name()
 #     choose_difficulty()
+#     get_random_word(word_list)
+#
+#     
 
 # main()
