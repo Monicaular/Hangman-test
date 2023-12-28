@@ -92,25 +92,5 @@ else:
 
 random_word = get_random_word(word_list)
 
-# def get_random_word(word_list):
-#     """
-#     Selects a random word from the lists that are in words.py
-#     """
-    
-#     random_word = random.choice(word_list)
-#     return random_word.upper()
-
-# get_random_word(word_list)
 
 
-
-# def main():
-#     show_title()
-#     show_play_rules()
-#     add_a_name()
-#     choose_difficulty()
-#     get_random_word(word_list)
-#
-#     
-
-# main()
