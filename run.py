@@ -29,16 +29,15 @@ def show_play_rules():
 
     display_rules = input("Would you like to see the game rules? (y/n)\n ")
     while display_rules.lower() not in ['y', 'n']:
-        display_rules = input('Please only choose n to skip the rules\
-                               or y to see them\n')
+        display_rules = input('Please only insert "y" or "n"\n')
 
     if display_rules.lower() == 'y':
         rules = [
             "Insert your username so we know who are playing with.",
             "Choose a difficulty level between easy, medium, and hard.",
             "Choose a letter that you believe is in the word to guess.",
-            "A correct letter will show you its position(s) in the word.\
-            A wrong letter would add to the hangman.",
+            "A correct letter will show you its position(s) in the word.",
+            "A wrong letter would add to the hangman.",
             "You have six tries to guess, otherwise the man will be hanged",
             "Let's begin"
         ]
@@ -54,18 +53,25 @@ def add_a_name():
     """
     It asks the user to enter a name and validates it
     """
-    pattern = re.compile("^[a-zA-Z0-9]{1,8}$")
-
     while True:
-        username = input("Please Enter a username:\n ")
-        if pattern.match(username):
-            print(f"\n{username}, let's start the hangman game! Have fun!")
-            break
-        else:
-            print("\nInvalid username. Please use only letters and numbers,\
-                  and the length should be between 1 and 8 characters.")
-
-
+        try:
+            print()
+            username = input("Please enter a username:\n")
+            # Check if the input contains spaces
+            if " " in username:
+                raise ValueError("Username cannot contain spaces.")
+            if not username.isalnum():
+                raise ValueError("Please enter letters and numbers.")
+            if not username.strip():
+                raise ValueError("Please enter letters and numbers.")
+            if len(username) > 8:
+                raise ValueError("Username must not exceed 8 characters.")
+        except ValueError as e:
+            print(f"{e}")
+        else:  
+            print(f"{username.capitalize()}, get ready to unravel the mystery!")
+            return username
+    
 def choose_difficulty():
     """
     Gets the user to choose the difficulty of the game that they prefer
@@ -77,13 +83,12 @@ def choose_difficulty():
             print("2 - Medium")
             print("3 - Hard")
 
-            selected_choice = input("\nEnter the number\
-                                    corresponding to your choice:\n ")
-            selected_choice = int(selected_choice)
+            choice = input("Choose between 1, 2 and 3: ")
+            choice = int(choice)
             # Validate user input
-            if selected_choice not in [1, 2, 3]:
+            if choice not in [1, 2, 3]:
                 raise ValueError("Invalid choice. Please enter 1, 2, or 3.\n")
-            return selected_choice  # Return the selected choice
+            return choice  # Return the selected choice
         except ValueError as e:
             print(e)
 
@@ -120,19 +125,28 @@ def game_play(random_word):
                 guess_message = f"Well done, {guess} is in the word."
                 print(green_color.format(guess_message))
                 guessed_letters.add(guess)
-                word_as_list = list(word_completed) #converts the string into a list of charcters
-                indices = [i for i, letter in enumerate(random_word) if letter == guess] #shows where the guessed letters are situatued in the word
+                word_as_list = list(word_completed)
+                # converts the string into a list of charcters
+                indices = [
+                    i for i, letter in enumerate(random_word)
+                    if letter == guess
+                ]
+
+
+                # shows where the guessed letters are situatued in the word
 
                 for index in indices:
                     word_as_list[index] = guess
 
-                word_completed = "".join(word_as_list) # joins the elements of the list into a string
+                word_completed = "".join(word_as_list) 
+                # joins the elements of the list into a string
 
                 if "_" not in word_completed:
-                    print(f'Congratulations! You guessed the word: {random_word}')
+                    print(f'Well Done! You guessed the word: {random_word}')
                     # guessed = True
                     return
-        elif guess.isalpha() and len(guess) > 1: #checks if the input is composed of alphabetical characters and has a length greater than 1
+        elif guess.isalpha() and len(guess) > 1: 
+        
             if guess == random_word: # checks if the word chosen by the player is equal to the word to be guessed
                 # guessed = True
                 print(f'Congratulations! You guessed the word: {random_word}')
