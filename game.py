@@ -57,7 +57,7 @@ def add_a_name():
     pattern = re.compile("^[a-zA-Z0-9]{1,8}$")
 
     while True:
-        username = input("Please Enter a username: ")
+        username = input("Please Enter a username:\n ")
         if pattern.match(username):
             print(f"\n{username}, let's start the hangman game! Have fun!")
             break
@@ -78,7 +78,7 @@ def choose_difficulty():
             print("3 - Hard")
 
             selected_choice = input("\nEnter the number \
-                corresponding to your choice: ")
+                corresponding to your choice:\n ")
             selected_choice = int(selected_choice)
             # Validate user input
             if selected_choice not in [1, 2, 3]:
@@ -98,7 +98,7 @@ def get_random_word(word_list):
 
 def check_letters(random_word, guessed_letters, \
                   tries, word_completed, red_color, green_color):
-    guess = input("Please guess a letter: ").upper()
+    guess = input("Please guess a letter:\n ").upper()
 
     if guess.isalpha() and len(guess) == 1:
         if guess in guessed_letters:
@@ -171,7 +171,7 @@ def game_state(random_word, guessed_letters, tries):
 
 def play_hangman_again():
     while True:
-        play_again = input("Would you like to play again? (y/n): ").lower()
+        play_again = input("Would you like to play again? (y/n):\n ").lower()
 
         if play_again == 'y':
             main()
