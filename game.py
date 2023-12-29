@@ -37,8 +37,8 @@ def show_play_rules():
             "Insert your username so we know who are playing with.",
             "Choose a difficulty level between easy, medium, and hard.",
             "Choose a letter that you believe is in the word to guess.",
-            "A correct letter will show you its position(s) in the word.",
-            "A wrong letter would add to the hangman.",
+            "A correct letter will show you its position(s) in the word.\
+            A wrong letter would add to the hangman.",
             "You have six tries to guess, otherwise the man will be hanged",
             "Let's begin"
         ]
@@ -62,7 +62,7 @@ def add_a_name():
             print(f"\n{username}, let's start the hangman game! Have fun!")
             break
         else:
-            print("\nInvalid username. Please use only letters and numbers, \
+            print("\nInvalid username. Please use only letters and numbers,\
                   and the length should be between 1 and 8 characters.")
 
 
@@ -77,8 +77,8 @@ def choose_difficulty():
             print("2 - Medium")
             print("3 - Hard")
 
-            selected_choice = input("\nEnter the number \
-                corresponding to your choice:\n ")
+            selected_choice = input("\nEnter the number\
+                                    corresponding to your choice:\n ")
             selected_choice = int(selected_choice)
             # Validate user input
             if selected_choice not in [1, 2, 3]:
@@ -96,67 +96,55 @@ def get_random_word(word_list):
     return random_word.upper()
 
 
-def check_letters(random_word, guessed_letters, \
-                  tries, word_completed, red_color, green_color):
-    guess = input("Please guess a letter:\n ").upper()
-
-    if guess.isalpha() and len(guess) == 1:
-        if guess in guessed_letters:
-            print(f"You already guessed the letter {guess}. Try again.")
-        elif guess not in random_word:
-            error_message = f"{guess} is not in the word."
-            print(red_color.format(error_message))
-            guessed_letters.add(guess)
-            tries -= 1
-        else:
-            guess_message = f"Well done, {guess} is in the word."
-            print(green_color.format(guess_message))
-            guessed_letters.add(guess)
-            word_as_list = list(word_completed)
-            indices = [i for i, letter in enumerate(random_word) \
-                       if letter == guess]
-
-            for index in indices:
-                word_as_list[index] = guess
-
-            word_completed = "".join(word_as_list)
-
-            if "_" not in word_completed:
-                print(f'Congratulations! You guessed the word: {random_word}')
-                return word_completed
-    # else:
-    #     print("Invalid input. Please enter a single letter.")
-    elif not guess.isalpha() or len(guess) != 1:
-        print("Invalid input. Please enter a single letter.")
-    return word_completed
-
-
-def reveal_word(word_completed, random_word):
-    if "_" not in word_completed:
-        print(f'Congratulations! You guessed the word: {random_word}')
-        return True
-    return False
-
-
 def game_play(random_word):
     red_color = style_colors['pale_red']
     green_color = style_colors['bright_green']
     word_completed = "_" * len(random_word)
     guessed_letters = set()
+    guessed_words = set()
     tries = 6
-
+    
     while tries > 0:
         game_state(random_word, guessed_letters, tries)
-        word_completed = check_letters(random_word, guessed_letters, \
-                                       tries, word_completed, red_color, \
-                                       green_color)
-        if "_" not in word_completed:
-            print(f'Congratulations! You guessed the word: {random_word}')
-            break
+        guess = input("Please guess a letter or a word:\n ").upper()
 
-        tries -= 1
-    if tries == 0:
-        print(f"Sorry, you're out of tries. The word was: {random_word}")
+        if guess.isalpha() and len(guess) == 1:
+            if guess in guessed_letters:
+                print(f"You already guessed the letter {guess}. Try again.")
+            elif guess not in random_word:
+                error_message = f"{guess} is not in the word."
+                print(red_color.format(error_message))
+                tries -= 1
+                guessed_letters.add(guess)
+            else:
+                guess_message = f"Well done, {guess} is in the word."
+                print(green_color.format(guess_message))
+                guessed_letters.add(guess)
+                word_as_list = list(word_completed) #converts the string into a list of charcters
+                indices = [i for i, letter in enumerate(random_word) if letter == guess] #shows where the guessed letters are situatued in the word
+
+                for index in indices:
+                    word_as_list[index] = guess
+
+                word_completed = "".join(word_as_list) # joins the elements of the list into a string
+
+                if "_" not in word_completed:
+                    print(f'Congratulations! You guessed the word: {random_word}')
+                    # guessed = True
+                    return
+        elif guess.isalpha() and len(guess) > 1: #checks if the input is composed of alphabetical characters and has a length greater than 1
+            if guess == random_word: # checks if the word chosen by the player is equal to the word to be guessed
+                # guessed = True
+                print(f'Congratulations! You guessed the word: {random_word}')
+                return
+            else:
+                print("Incorrect word guess. Try again.")
+                tries -= 1
+                guessed_words.add(guess)
+        else:
+            print("Invalid input. Please enter a single letter.")
+
+    print(f"Sorry, you're out of tries. The word was: {random_word}")
 
 
 def game_state(random_word, guessed_letters, tries):
