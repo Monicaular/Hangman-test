@@ -1,5 +1,5 @@
 import random
-import re
+
 import words
 from style import Color, style_colors
 
@@ -7,18 +7,20 @@ from style import Color, style_colors
 def show_title():
 
     lilac_color = style_colors['lilac']
-    game_title = '''
+    game_title = """
   _    _            _   _   _____  __  __            _   _ 
  | |  | |    /\    | \ | | / ____||  \/  |    /\    | \ | |
  | |__| |   /  \   |  \| || |  __ | \  / |   /  \   |  \| |
  |  __  |  / /\ \  | . ` || | |_ || |\/| |  / /\ \  | . ` |
  | |  | | / ____ \ | |\  || |__| || |  | | / ____ \ | |\  |
  |_|  |_|/_/    \_\|_| \_| \_____||_|  |_|/_/    \_\|_| \_|
+                                                         
+Welcome to Hangman Game!
                                                            
-'''
+"""
+
     formatted_game_title = lilac_color.format(game_title)
     print(formatted_game_title)
-    print("Welcome to Hangman Game!")
 
 
 def show_play_rules():
@@ -33,11 +35,11 @@ def show_play_rules():
 
     if display_rules.lower() == 'y':
         rules = [
-            "Insert your username so we know who are playing with.",
-            "Choose a difficulty level between easy, medium, and hard.",
-            "Choose a letter that you believe is in the word to guess.",
-            "A correct letter will show you its position(s) in the word.",
-            "A wrong letter would add to the hangman.",
+            "Insert your username so we know who are we playing with",
+            "Choose a difficulty level between easy, medium, and hard",
+            "Choose a letter or a word to guess",
+            "A correct letter will show you its position(s) in the word",
+            "A wrong letter would add to the hangman",
             "You have six tries to guess, otherwise the man will be hanged",
             "Let's begin"
         ]
@@ -69,7 +71,7 @@ def add_a_name():
         except ValueError as e:
             print(f"{e}")
         else:  
-            print(f"{username.capitalize()}, get ready to unravel the mystery!")
+            print(f"\n{username.capitalize()}, get ready to unravel the mystery!")
             return username
     
 def choose_difficulty():
